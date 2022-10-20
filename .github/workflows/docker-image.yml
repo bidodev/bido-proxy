@@ -28,9 +28,9 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
+          load: true
           tags: nginx_proxy:latest
           cache-from: type=gha
-          push: true
           cache-to: type=gha,mode=max
 
       - name: Test with curl

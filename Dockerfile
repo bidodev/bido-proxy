@@ -1,4 +1,4 @@
-ARG IMAGE=ubuntu:20.04
+ARG IMAGE=ubuntu:22.04
 FROM $IMAGE as builder
 
 COPY sources.list /etc/apt/sources.list

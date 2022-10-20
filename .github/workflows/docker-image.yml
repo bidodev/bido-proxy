@@ -30,7 +30,7 @@ jobs:
         with:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
-          push: true
+          load: true
           tags: user/app:latest
 
       # - name: Build

@@ -14,11 +14,13 @@ RUN apt-get update && \
 
 RUN cd /app/nginx-* && \
     ls -l && \
-    patch -p1 < ../ngx_http_proxy_connect_module/patch/proxy_connect_rewrite_1018.patch
+    patch -p1 < ../ngx_http_proxy_connect_module/patch/proxy_connect_rewrite_102101.patch
 
 RUN cd /app/nginx-* && \
-    ./configure --add-module=/app/ngx_http_proxy_connect_module --with-http_ssl_module \
-      --with-http_stub_status_module --with-http_realip_module --with-threads
+    ./configure                                                                                                         \
+      --add-module=./ngx_http_proxy_connect_module                                                                      \
+      --sbin-path=/usr/sbin/nginx                                                                                       \
+      --with-cc-opt='-g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -fPIC' && \
 
 RUN make -j$(grep processor /proc/cpuinfo | wc -l)
 RUN make install -j$(grep processor /proc/cpuinfo | wc -l)

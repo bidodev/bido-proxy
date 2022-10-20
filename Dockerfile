@@ -7,7 +7,8 @@ ADD https://github.com/krallin/tini/releases/download/v0.19.0/tini /tini
 WORKDIR /app
 
 RUN apt-get update && \
-    apt-get install -y libfontconfig1 libpcre3 libpcre3-dev git dpkg-dev libpng-dev libssl-dev && \
+    apt-get install -y libfontconfig1 libpcre3 libpcre3-dev git dpkg-dev libpng-dev libssl-dev                       && \
+    apt install curl                                                                                                 && \
     curl -LSs http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz -O                                             && \
     tar xf nginx-${NGINX_VERSION}.tar.gz                                                                             && \
     git config --global http.sslverify false  && \

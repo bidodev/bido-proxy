@@ -31,7 +31,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           push: true
-          tags: bido270689/bido
+          tags: latest
 
       # - name: Build
       #   uses: docker/build-push-action@v3

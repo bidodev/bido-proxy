@@ -38,7 +38,7 @@ docker build -t reiz/nginx_proxy:0.0.3 .
 Or simply download it from [Docker Hub](https://hub.docker.com/r/reiz/nginx_proxy/) with: 
 
 ```
-docker run --rm -d -p 8888:8888 bido270689/bido-proxy:latest
+docker run --rm -d -p 3128:3128 bido270689/bido-proxy:latest
 ```
 
 ## Allowlist certain domains

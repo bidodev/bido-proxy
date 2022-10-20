@@ -27,7 +27,7 @@ RUN curl -LSs http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz -O        
 
 WORKDIR /
 
-COPY nginx_whitelist.conf /usr/local/nginx/conf/nginx.conf
+COPY ./nginx.conf /usr/local/nginx/conf/nginx.conf
 
 EXPOSE 8888
 

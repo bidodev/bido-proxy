@@ -28,6 +28,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
+          builder: ${{ steps.buildx.outputs.name }}
           context: .
           push: true
           tags: user/app:latest

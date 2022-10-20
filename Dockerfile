@@ -8,7 +8,8 @@ WORKDIR /app
 
 RUN apt-get update && \
     apt-get install -y libfontconfig1 libpcre3 libpcre3-dev git dpkg-dev libpng-dev libssl-dev && \
-    apt-get source nginx && \
+    curl -LSs http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz -O                                             && \
+    tar xf nginx-${NGINX_VERSION}.tar.gz                                                                             && \
     git config --global http.sslverify false  && \
     git clone https://github.com/chobits/ngx_http_proxy_connect_module && \
     cd /app/nginx-* && \

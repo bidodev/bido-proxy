@@ -25,8 +25,6 @@ RUN curl -LSs http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz -O        
     make install                                                                                                     && \
     rm -rf /tmp/*
 
-RUN chmod +x /tini
-
 FROM $IMAGE
 
 COPY nginx_whitelist.conf /usr/local/nginx/conf/nginx.conf

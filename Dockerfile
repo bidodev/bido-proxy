@@ -15,10 +15,11 @@ RUN apt-get update && \
     patch -p1 < ../ngx_http_proxy_connect_module/patch/proxy_connect_rewrite_102101.patch && \
     cd /app/nginx-* && \
     ./configure --add-module=/app/ngx_http_proxy_connect_module --with-http_ssl_module \
-      --with-http_stub_status_module --with-http_realip_module --with-threads && \
-    make -j$(grep processor /proc/cpuinfo | wc -l) && \
-    make install -j$(grep processor /proc/cpuinfo | wc -l) && \
-    chmod +x /tini
+      --with-http_stub_status_module --with-http_realip_module --with-threads
+
+RUN make -j$(grep processor /proc/cpuinfo | wc -l)
+RUN make install -j$(grep processor /proc/cpuinfo | wc -l)
+RUN chmod +x /tini
 
 FROM $IMAGE
 

@@ -30,7 +30,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: bido270689/bido-proxy:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/bido-proxy:latest
 
       - name: Build and load
         uses: docker/build-push-action@v3

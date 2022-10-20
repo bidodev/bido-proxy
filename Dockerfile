@@ -1,6 +1,8 @@
 ARG IMAGE=alpine:3.16.1
 FROM $IMAGE as builder
 
+ENV NGINX_VERSION 1.23.1
+
 COPY sources.list /etc/apt/sources.list
 ADD https://github.com/krallin/tini/releases/download/v0.19.0/tini /tini
 
@@ -25,7 +27,7 @@ RUN curl -LSs http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz -O        
     make -j $(nproc)                                                                                                 && \
     make install                                                                                                     && \
     rm -rf /tmp/*
-    
+
 RUN chmod +x /tini
 
 FROM $IMAGE

@@ -2,7 +2,6 @@ ARG IMAGE=alpine:3.16.1
 FROM $IMAGE as builder
 
 ENV NGINX_VERSION 1.23.1
-ADD https://github.com/krallin/tini/releases/download/v0.19.0/tini /tini
 
 WORKDIR /tmp
 
@@ -31,11 +30,7 @@ RUN chmod +x /tini
 FROM $IMAGE
 
 COPY nginx_whitelist.conf /usr/local/nginx/conf/nginx.conf
-COPY --from=builder /usr/local/nginx/sbin/nginx /usr/local/nginx/sbin/nginx
-COPY --from=builder /tini /tini
 
 EXPOSE 8888
-
-ENTRYPOINT ["/tini", "--"]
 
 CMD [ "nginx", "-g", "daemon off;" ]

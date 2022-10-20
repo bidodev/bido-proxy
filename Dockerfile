@@ -1,29 +1,31 @@
-ARG IMAGE=ubuntu:22.04
+ARG IMAGE=alpine:3.16.1
 FROM $IMAGE as builder
 
 COPY sources.list /etc/apt/sources.list
 ADD https://github.com/krallin/tini/releases/download/v0.19.0/tini /tini
 
-WORKDIR /app
+WORKDIR /tmp
 
-RUN apt-get update && \
-    apt-get install -y libfontconfig1 libpcre3 libpcre3-dev git dpkg-dev libpng-dev libssl-dev && \
-    apt-get source nginx && \
-    git config --global http.sslverify false  && \
-    git clone https://github.com/chobits/ngx_http_proxy_connect_module
+RUN apk update && \
+    apk add       \
+      alpine-sdk  \
+      openssl-dev \
+      pcre-dev    \
+      zlib-dev
 
-RUN cd /app/nginx-* && \
-    ls -l && \
-    patch -p1 < ../ngx_http_proxy_connect_module/patch/proxy_connect_rewrite_102101.patch
-
-RUN cd /app/nginx-* && \
+RUN curl -LSs http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz -O                                             && \
+    tar xf nginx-${NGINX_VERSION}.tar.gz                                                                             && \
+    cd     nginx-${NGINX_VERSION}                                                                                    && \
+    git clone https://github.com/chobits/ngx_http_proxy_connect_module                                               && \
+    patch -p1 < ./ngx_http_proxy_connect_module/patch/proxy_connect_rewrite_102101.patch                             && \
     ./configure                                                                                                         \
       --add-module=./ngx_http_proxy_connect_module                                                                      \
       --sbin-path=/usr/sbin/nginx                                                                                       \
       --with-cc-opt='-g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -fPIC' && \
-
-RUN make -j$(grep processor /proc/cpuinfo | wc -l)
-RUN make install -j$(grep processor /proc/cpuinfo | wc -l)
+    make -j $(nproc)                                                                                                 && \
+    make install                                                                                                     && \
+    rm -rf /tmp/*
+    
 RUN chmod +x /tini
 
 FROM $IMAGE

@@ -13,6 +13,7 @@ RUN apt-get update && \
     git clone https://github.com/chobits/ngx_http_proxy_connect_module
 
 RUN cd /app/nginx-* && \
+    ls -l && \
     patch -p1 < ../ngx_http_proxy_connect_module/patch/proxy_connect_rewrite_1018.patch
 
 RUN cd /app/nginx-* && \

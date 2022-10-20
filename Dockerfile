@@ -40,13 +40,6 @@ COPY --from=builder /tini /tini
 ## save apt-get update step
 COPY --from=builder /var/lib/apt/lists/ /var/lib/apt/lists/
 
-RUN apt-get install -y --no-install-recommends libssl-dev && \
-    mkdir -p /usr/local/nginx/logs/ && \
-    touch /usr/local/nginx/logs/error.log && \
-    apt-get clean autoclean && \
-    apt-get autoremove --yes && \
-    rm -rf /var/lib/{apt,dpkg,cache,log}/
-
 EXPOSE 8888
 
 ENTRYPOINT ["/tini", "--"]

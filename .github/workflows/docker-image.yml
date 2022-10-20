@@ -28,7 +28,7 @@ jobs:
       - name: Build and push
         run: |
           docker buildx build --push \
-            --tag proxy:latest
+            --tag proxy:latest \
             --platform linux/amd64 
 
       # - name: Build

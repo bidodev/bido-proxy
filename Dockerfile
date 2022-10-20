@@ -1,5 +1,5 @@
-ARG IMAGE=alpine:3.16.1
-FROM $IMAGE as builder
+FROM alpine:3.16.1
+LABEL maintainer "Takahiro INOUE <github.com/hinata>"
 
 ENV NGINX_VERSION 1.23.1
 
@@ -25,10 +25,12 @@ RUN curl -LSs http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz -O        
     make install                                                                                                     && \
     rm -rf /tmp/*
 
-FROM $IMAGE
+WORKDIR /
 
 COPY nginx_whitelist.conf /usr/local/nginx/conf/nginx.conf
 
 EXPOSE 8888
+
+STOPSIGNAL SIGTERM
 
 CMD [ "nginx", "-g", "daemon off;" ]

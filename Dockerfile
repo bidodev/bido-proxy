@@ -21,7 +21,7 @@ RUN curl -LSs http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz -O        
       --add-module=./ngx_http_proxy_connect_module                                                                      \
       --sbin-path=/usr/sbin/nginx                                                                                       \
       --with-cc-opt='-g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -fPIC' && \
-    make -j $(nproc)                                                                                                 && \
+    make -j --with-debug $(nproc)                                                                                                 && \
     make install                                                                                                     && \
     rm -rf /tmp/*
 

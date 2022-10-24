@@ -18,10 +18,11 @@ RUN curl -LSs http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz -O        
     git clone https://github.com/chobits/ngx_http_proxy_connect_module                                               && \
     patch -p1 < ./ngx_http_proxy_connect_module/patch/proxy_connect_rewrite_102101.patch                             && \
     ./configure                                                                                                         \
+      --with-debug                                                                                                      \
       --add-module=./ngx_http_proxy_connect_module                                                                      \
       --sbin-path=/usr/sbin/nginx                                                                                       \
       --with-cc-opt='-g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -fPIC' && \
-    make -j --with-debug $(nproc)                                                                                                 && \
+    make -j $(nproc)                                                                                                 && \
     make install                                                                                                     && \
     rm -rf /tmp/*
 

@@ -26,14 +26,14 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: .
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/bido-proxy:latest
 
       - name: Build and load
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: .
           load: true
